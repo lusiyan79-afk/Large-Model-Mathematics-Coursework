@@ -1,0 +1,39 @@
+model_name_or_path: models/gemma-3-270m-it
+modelscope_model_id: google/gemma-3-270m-it
+
+train_file: data/logo-detailed-prompt/train.jsonl
+valid_file: data/logo-detailed-prompt/valid.jsonl
+output_dir: outputs/lora_r8_lr1e-4
+final_adapter_dir: adapter
+
+max_length: 1536
+max_new_tokens: 700
+repetition_penalty: 1.1
+no_repeat_ngram_size: 0
+
+lora_rank: 8
+lora_alpha: 16
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+learning_rate: 0.0001
+num_train_epochs: 2
+per_device_train_batch_size: 1
+per_device_eval_batch_size: 1
+gradient_accumulation_steps: 8
+warmup_ratio: 0.05
+weight_decay: 0.0
+logging_steps: 5
+eval_steps: 10
+save_steps: 10
+save_total_limit: 2
+seed: 42
+fp16: false
+gradient_checkpointing: true
